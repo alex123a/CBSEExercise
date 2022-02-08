@@ -5,24 +5,23 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import dk.sdu.mmmi.cbse.main.Game;
 
-public class Player extends SpaceObject {
+import java.util.Random;
 
-    private boolean left;
-    private boolean right;
-    private boolean up;
+public class Enemy extends SpaceObject {
 
     private float maxSpeed;
-    private float acceleration;
-    private float deceleration;
 
-    public Player() {
+    Random random = new Random();
+    int whatToDo = random.nextInt(3);
+    int turns = 0;
+    int turnsBeforeChange = 60;
 
-        x = Game.WIDTH / 2;
-        y = Game.HEIGHT / 2;
+    public Enemy() {
 
-        maxSpeed = 300;
-        acceleration = 200;
-        deceleration = 10;
+        x = Game.WIDTH / 2 + 30;
+        y = Game.HEIGHT / 2 + 30;
+
+        maxSpeed = 30;
 
         shapex = new float[4];
         shapey = new float[4];
@@ -47,43 +46,34 @@ public class Player extends SpaceObject {
         shapey[3] = y + MathUtils.sin(radians + 4 * 3.1415f / 5) * 8;
     }
 
-    public void setLeft(boolean b) {
-        left = b;
-    }
-
-    public void setRight(boolean b) {
-        right = b;
-    }
-
-    public void setUp(boolean b) {
-        up = b;
-    }
 
     public void update(float dt) {
 
-        // turning
-        if (left) {
+        if (whatToDo == 0) {
             radians += rotationSpeed * dt;
-        } else if (right) {
+            turns++;
+            if (turns % turnsBeforeChange == 0) {
+                dx = 0;
+                dy = 0;
+                whatToDo = random.nextInt(4);
+            }
+        } else if (whatToDo == 1) {
             radians -= rotationSpeed * dt;
+            turns++;
+            if (turns % turnsBeforeChange == 0) {
+                dx = 0;
+                dy = 0;
+                whatToDo = random.nextInt(4);
+            }
+        } else {
+            turns++;
+            if (turns % (turnsBeforeChange + 100) == 0) {
+                whatToDo = random.nextInt(4);
+            }
         }
 
-        // accelerating
-        if (up) {
-            dx += MathUtils.cos(radians) * acceleration * dt;
-            dy += MathUtils.sin(radians) * acceleration * dt;
-        }
-
-        // deceleration
-        float vec = (float) Math.sqrt(dx * dx + dy * dy);
-        if (vec > 0) {
-            dx -= (dx / vec) * deceleration * dt;
-            dy -= (dy / vec) * deceleration * dt;
-        }
-        if (vec > maxSpeed) {
-            dx = (dx / vec) * maxSpeed;
-            dy = (dy / vec) * maxSpeed;
-        }
+        dx += MathUtils.cos(radians) * maxSpeed * dt;
+        dy += MathUtils.sin(radians) * maxSpeed * dt;
 
         // set position
         x += dx * dt;
@@ -98,11 +88,11 @@ public class Player extends SpaceObject {
     }
 
     public void draw(ShapeRenderer sr) {
-
         sr.setColor(1, 1, 1, 1);
 
         sr.begin(ShapeType.Line);
 
+        // Draw enemy
         for (int i = 0, j = shapex.length - 1;
                 i < shapex.length;
                 j = i++) {
