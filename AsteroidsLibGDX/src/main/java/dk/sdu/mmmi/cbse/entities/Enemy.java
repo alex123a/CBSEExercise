@@ -5,18 +5,21 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import dk.sdu.mmmi.cbse.main.Game;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Enemy extends SpaceObject {
 
     private float maxSpeed;
+    private ArrayList<Bullet> bullets;
 
     Random random = new Random();
     int whatToDo = random.nextInt(3);
     int turns = 0;
     int turnsBeforeChange = 60;
+    int fireRan = random.nextInt(50);
 
-    public Enemy() {
+    public Enemy(ArrayList<Bullet> bullets) {
 
         x = Game.WIDTH / 2 + 30;
         y = Game.HEIGHT / 2 + 30;
@@ -28,6 +31,8 @@ public class Enemy extends SpaceObject {
 
         radians = 3.1415f / 2;
         rotationSpeed = 3;
+
+        this.bullets = bullets;
 
     }
 
@@ -44,6 +49,10 @@ public class Enemy extends SpaceObject {
 
         shapex[3] = x + MathUtils.cos(radians + 4 * 3.1415f / 5) * 8;
         shapey[3] = y + MathUtils.sin(radians + 4 * 3.1415f / 5) * 8;
+    }
+
+    private void fire() {
+        bullets.add(new Bullet(x, y, radians));
     }
 
 
@@ -81,6 +90,12 @@ public class Enemy extends SpaceObject {
 
         // set shape
         setShape();
+
+        // Fire
+        if (fireRan == 0) {
+            this.fire();
+        }
+        fireRan = random.nextInt(50);
 
         // screen wrap
         wrap();
