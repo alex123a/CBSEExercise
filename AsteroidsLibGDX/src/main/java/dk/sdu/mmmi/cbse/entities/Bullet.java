@@ -40,7 +40,7 @@ public class Bullet extends SpaceObject {
 
     public void draw(ShapeRenderer sr) {
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(1, 1, 1, 1);
+        sr.setColor(0, 1, 0, 1);
         sr.circle(x, y, width * 3);
         sr.end();
     }

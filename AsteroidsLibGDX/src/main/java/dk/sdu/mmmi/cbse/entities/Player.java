@@ -99,7 +99,7 @@ public class Player extends SpaceObject {
 
     public void draw(ShapeRenderer sr) {
 
-        sr.setColor(1, 1, 1, 1);
+        sr.setColor(0, 0, 1, 1);
 
         sr.begin(ShapeType.Line);
 
