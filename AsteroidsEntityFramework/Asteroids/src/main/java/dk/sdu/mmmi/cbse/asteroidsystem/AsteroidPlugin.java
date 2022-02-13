@@ -41,7 +41,6 @@ public class AsteroidPlugin implements IGamePluginService {
         float radius = 30.0f;
 
         Entity asteroid = new Asteroid();
-        // TODO Add life part
         asteroid.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         asteroid.add(new PositionPart(x, y, radians));
         asteroid.setRadius(radius);
