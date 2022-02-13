@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.cbse.asteroidsystem;
+package dk.sdu.mmmi.cbse.bulletsystem;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -7,20 +7,20 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
-public class AsteroidControlSystem implements IEntityProcessingService {
+public class BulletControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
 
-        for (Entity asteroid : world.getEntities(Asteroid.class)) {
-            PositionPart positionPart = asteroid.getPart(PositionPart.class);
-            MovingPart movingPart = asteroid.getPart(MovingPart.class);
+        for (Entity bullet : world.getEntities(Bullet.class)) {
+            PositionPart positionPart = bullet.getPart(PositionPart.class);
+            MovingPart movingPart = bullet.getPart(MovingPart.class);
 
             movingPart.setUp(true);
 
-            movingPart.process(gameData, asteroid);
-            positionPart.process(gameData, asteroid);
+            movingPart.process(gameData, bullet);
+            positionPart.process(gameData, bullet);
 
-            updateShape(asteroid);
+            updateShape(bullet);
         }
     }
 
@@ -80,9 +80,8 @@ public class AsteroidControlSystem implements IEntityProcessingService {
 
         shapex[15] = (float) (x + Math.cos(radians + 2 * 3.1415f / 3) * radius);
         shapey[15] = (float) (y + Math.sin(radians + 2 * 3.1415f / 3) * radius);
-
+        
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
     }
-
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import dk.sdu.mmmi.cbse.asteroidsystem.AsteroidControlSystem;
 import dk.sdu.mmmi.cbse.asteroidsystem.AsteroidPlugin;
+import dk.sdu.mmmi.cbse.bulletsystem.BulletControlSystem;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -57,6 +58,8 @@ public class Game
         IEntityProcessingService enemyProcess = new EnemyControlSystem();
         IEntityProcessingService asteroidProcess = new AsteroidControlSystem();
 
+        IEntityProcessingService bulletProcesss = new BulletControlSystem();
+
         entityPlugins.add(playerPlugin);
         entityProcessors.add(playerProcess);
 
@@ -65,6 +68,8 @@ public class Game
 
         entityPlugins.add(asteroidPlugin);
         entityProcessors.add(asteroidProcess);
+
+        entityProcessors.add(bulletProcesss);
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {
