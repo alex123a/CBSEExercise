@@ -14,7 +14,7 @@ import java.util.Random;
 public class AsteroidDetectionSystem implements IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
-        // Checking if asteroid get hits by bullet
+        // Checking if asteroid get hit by a bullet
         for (Entity asteroid: world.getEntities(Asteroid.class)) {
             PositionPart asteroidPosition = asteroid.getPart(PositionPart.class);
             for (Entity bullet: world.getEntities(Bullet.class)) {

@@ -17,6 +17,7 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.enemysystem.EnemyControlSystem;
+import dk.sdu.mmmi.cbse.enemysystem.EnemyDetectionSystem;
 import dk.sdu.mmmi.cbse.enemysystem.EnemyPlugin;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.playersystem.PlayerControlSystem;
@@ -104,6 +105,9 @@ public class Game
 
         IPostEntityProcessingService asteroidDetectionProcess = new AsteroidDetectionSystem();
         asteroidDetectionProcess.process(gameData, world);
+
+        IPostEntityProcessingService enemyDetectionProcess = new EnemyDetectionSystem();
+        enemyDetectionProcess.process(gameData, world);
 
     }
 

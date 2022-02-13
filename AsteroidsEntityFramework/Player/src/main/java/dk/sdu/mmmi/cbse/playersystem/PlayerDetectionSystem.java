@@ -19,7 +19,7 @@ public class PlayerDetectionSystem implements IPostEntityProcessingService {
                 if (Math.sqrt(Math.pow(playerPosition.getX() - asteroidPosition.getX(), 2) +
                         Math.pow(playerPosition.getY() - asteroidPosition.getY(), 2)) <= 8 + asteroid.getRadius()) {
                     world.removeEntity(player);
-                    System.out.println("Player hit asteroid");
+                    System.out.println("Player is hit by an asteroid");
                 }
             }
         }
