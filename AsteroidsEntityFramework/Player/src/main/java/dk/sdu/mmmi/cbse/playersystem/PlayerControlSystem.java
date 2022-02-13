@@ -28,7 +28,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.setUp(gameData.getKeys().isDown(UP));
 
             if (gameData.getKeys().isPressed(SPACE)) {
-                System.out.println("fuck");
                 BulletPlugin bullet = new BulletPlugin();
                 bullet.fire(gameData, world, player.getID());
             }

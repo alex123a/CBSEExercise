@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.enemysystem;
 
+import dk.sdu.mmmi.cbse.bulletsystem.BulletPlugin;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -42,10 +43,16 @@ public class EnemyControlSystem implements IEntityProcessingService {
                 movingPart.setUp(true);
                 movingPart.setLeft(false);
                 movingPart.setRight(false);
-                if (turns % (turnsBeforeChange + 30) == 0) {
+                if (turns % (turnsBeforeChange) == 0) {
                     whatToDo = random.nextInt(4);
                 }
             }
+
+            if (fireRan == 0) {
+                BulletPlugin bullet = new BulletPlugin();
+                bullet.fire(gameData, world, enemy.getID());
+            }
+            fireRan = random.nextInt(50);
 
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
