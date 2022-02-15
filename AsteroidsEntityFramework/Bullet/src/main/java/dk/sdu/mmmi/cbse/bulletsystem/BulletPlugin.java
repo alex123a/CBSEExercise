@@ -26,7 +26,7 @@ public class BulletPlugin implements IGamePluginService {
         PositionPart entityPosition = whoFired.getPart(PositionPart.class);
         float deacceleration = 10;
         float acceleration = 10000;
-        float maxSpeed = 260;
+        float maxSpeed = 300;
         float rotationSpeed = 5;
         float x = entityPosition.getX();
         float y = entityPosition.getY();
@@ -42,7 +42,7 @@ public class BulletPlugin implements IGamePluginService {
         bullet.setShapeX(newShapeX);
         bullet.setShapeY(newShapeY);
         // Expiration is in seconds.
-        bullet.add(new LifePart(100, 1.3f));
+        bullet.add(new LifePart(100, 1.0f));
 
         return bullet;
     }

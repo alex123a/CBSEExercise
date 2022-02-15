@@ -1,9 +1,11 @@
 package dk.sdu.mmmi.cbse.enemysystem;
 
 import dk.sdu.mmmi.cbse.asteroidsystem.Asteroid;
+import dk.sdu.mmmi.cbse.bulletsystem.Bullet;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 
@@ -20,6 +22,17 @@ public class EnemyDetectionSystem implements IPostEntityProcessingService {
                         Math.pow(enemyPosition.getY() - asteroidPosition.getY(), 2)) <= 8 + asteroid.getRadius()) {
                     world.removeEntity(enemy);
                     System.out.println("Enemy is hit by an asteroid");
+                }
+            }
+
+            for (Entity bullet: world.getEntities(Bullet.class)) {
+                PositionPart bulletPosition = bullet.getPart(PositionPart.class);
+                LifePart bulletLifepart = bullet.getPart(LifePart.class);
+                if (Math.sqrt(Math.pow(enemyPosition.getX() - bulletPosition.getX(), 2) +
+                        Math.pow(enemyPosition.getY() - bulletPosition.getY(), 2)) <= 8 + bullet.getRadius() && bulletLifepart.getExpiration() <= 0.9f) {
+                    world.removeEntity(enemy);
+                    world.removeEntity(bullet);
+                    System.out.println("Enemy is hit by a bullet");
                 }
             }
         }
