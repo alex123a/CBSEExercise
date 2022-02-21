@@ -86,6 +86,8 @@ public class AsteroidControlSystem implements IEntityProcessingService {
 
         asteroid.setShapeX(shapex);
         asteroid.setShapeY(shapey);
+        asteroid.setBoundingCircleX(x);
+        asteroid.setBoundingCircleY(y);
     }
 
 }

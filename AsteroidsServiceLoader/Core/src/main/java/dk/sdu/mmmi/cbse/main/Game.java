@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.services.IBulletService;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
@@ -121,7 +122,11 @@ public class Game
         return SPILocator.locateAll(IEntityProcessingService.class);
     }
     
-       private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
+    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return SPILocator.locateAll(IPostEntityProcessingService.class);
+    }
+
+    private Collection<? extends IBulletService> getBulletServices() {
+        return SPILocator.locateAll(IBulletService.class);
     }
 }

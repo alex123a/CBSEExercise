@@ -6,7 +6,9 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
+import dk.sdu.mmmi.cbse.common.services.IBulletService;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.util.SPILocator;
 
 import java.util.Random;
 
@@ -47,13 +49,16 @@ public class EnemyControlSystem implements IEntityProcessingService {
                     whatToDo = random.nextInt(4);
                 }
             }
-            /*
-            if (fireRan == 0) {
-                BulletPlugin bullet = new BulletPlugin();
+
+            IBulletService bullet = null;
+            for (IBulletService bulletService: SPILocator.locateAll(IBulletService.class)) {
+                bullet = bulletService;
+            }
+
+            if (bullet != null && fireRan == 0) {
                 bullet.fire(gameData, world, enemy.getID());
             }
 
-             */
             fireRan = random.nextInt(50);
 
             movingPart.process(gameData, enemy);

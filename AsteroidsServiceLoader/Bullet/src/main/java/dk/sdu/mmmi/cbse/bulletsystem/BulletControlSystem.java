@@ -90,5 +90,7 @@ public class BulletControlSystem implements IEntityProcessingService {
         
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
+        entity.setBoundingCircleX(x);
+        entity.setBoundingCircleY(y);
     }
 }

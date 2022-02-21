@@ -34,22 +34,35 @@ public class AsteroidPlugin
 
     @Override
     public void process(GameData gameData, World world) {
-        
+        for (Entity entity: world.getEntities()) {
+            for (Entity asteroid: world.getEntities(Asteroid.class)) {
+                if (asteroid.getID().equals(entity.getID())) {
+                    continue;
+                }
+
+                if (entity.checkCollision(asteroid)) {
+                    SplitterPart splitter = asteroid.getPart(SplitterPart.class);
+                    splitter.setShouldSplit(true);
+                }
+            }
+        }
     }
     
     private Asteroid createLargeAsteroid(GameData gameData){
        float speed = (float) Math.random() * 10f + 40f;
        float radians = 3.1415f / 2 + (float) Math.random();
-        float x = gameData.getDisplayWidth() / 2 + 100;
-        float y = gameData.getDisplayHeight() / 2 + 50;
-        Entity asteroid = new Asteroid(LARGE);
+       float x = gameData.getDisplayWidth() / 2 + 100;
+       float y = gameData.getDisplayHeight() / 2 + 50;
+       Entity asteroid = new Asteroid(LARGE);
 
-        asteroid.add(new MovingPart(0, speed, speed, 0));
-        asteroid.add(new PositionPart(x, y, radians));
-        asteroid.add(new LifePart(6, 69));
-        asteroid.add(new SplitterPart());
-        asteroid.setRadius(15);
+       asteroid.add(new MovingPart(0, speed, speed, 0));
+       asteroid.add(new PositionPart(x, y, radians));
+       asteroid.add(new LifePart(6, 69));
+       asteroid.add(new SplitterPart());
+       asteroid.setRadius(15);
+       asteroid.setBoundingCircleX(x);
+       asteroid.setBoundingCircleY(y);
 
-        return (Asteroid) asteroid;  
+       return (Asteroid) asteroid;
     }
 }
