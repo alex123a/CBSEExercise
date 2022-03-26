@@ -1,0 +1,11 @@
+platform=1648294672824
+cluster.asteroidsnetbeansmodules=1648294672776
+cluster.bin=1648294672776
+cluster.etc=1648294672823
+cluster.platform=1648294672824
+user=1648294672824
+crc=7
+locale=da_DK
+branding=asteroidsnetbeansmodules
+java.version=14.0.2
+java.vm.version=14.0.2+12-46
