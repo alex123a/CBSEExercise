@@ -29,11 +29,11 @@ public class EnemyPlugin implements IGamePluginService {
     private Entity createEnemyShip(GameData gameData) {
 
         float deacceleration = 10;
-        float acceleration = 150;
-        float maxSpeed = 200;
+        float acceleration = 200;
+        float maxSpeed = 150;
         float rotationSpeed = 5;
-        float x = new Random().nextFloat() * gameData.getDisplayWidth();
-        float y = new Random().nextFloat() * gameData.getDisplayHeight();
+        float x = gameData.getDisplayWidth() / 2 + 30;
+        float y = gameData.getDisplayHeight() / 2 + 30;
         float radians = 3.1415f / 2;
 
         float[] colour = new float[4];
