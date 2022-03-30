@@ -2,6 +2,7 @@ package agecalculatorspringclient;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.springframework.context.ApplicationContext;
@@ -16,7 +17,10 @@ public class AgeCalculatorSpringClient {
      */
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-        AgeCalculatorBean ageCalculatorBean = (AgeCalculatorBean) context.getBean("ageCalculatorBean");
+        // TODO Use getBeanByType instead
+        // AgeCalculatorBean ageCalculatorBean = (AgeCalculatorBean) context.getBean("ageCalculatorBean");
+        // AgeCalculatorBean ageCalculatorBean = (AgeCalculatorBean) context.getBean(AgeCalculatorBean.class);
+        Map<String, AgeCalculatorBean> ageCalculatorBean = context.getBeansOfType(AgeCalculatorBean.class);
 
         Scanner scanner = new Scanner(System.in);
 
@@ -33,9 +37,11 @@ public class AgeCalculatorSpringClient {
         dateOfBirth.clear();
         dateOfBirth.set(year, month - 1, date);
 
-        int age = ageCalculatorBean.calculateAge(dateOfBirth);
-
-        System.out.println("Your age is " + age);
+        for (AgeCalculatorBean ageCalculator: ageCalculatorBean.values()) {
+            // int age = ageCalculatorBean.calculateAge(dateOfBirth);
+            int age = ageCalculator.calculateAge(dateOfBirth);
+            System.out.println("Your age is " + age);
+        }
 
         scanner.close();
     }
