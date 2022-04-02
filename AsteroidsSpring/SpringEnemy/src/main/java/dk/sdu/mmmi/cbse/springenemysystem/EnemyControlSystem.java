@@ -1,6 +1,7 @@
-package dk.sdu.mmmi.cbse.enemysystem;
+package dk.sdu.mmmi.cbse.springenemysystem;
 
 // import dk.sdu.mmmi.cbse.bullet.BulletPlugin;
+
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -9,9 +10,11 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IBulletService;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.util.SPILocator;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
+@Component
 public class EnemyControlSystem implements IEntityProcessingService {
     Random random = new Random();
     int whatToDo = random.nextInt(3);

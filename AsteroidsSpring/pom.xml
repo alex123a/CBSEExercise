@@ -16,8 +16,8 @@
         <module>Asteroid</module>
         <module>Collision</module>
         <module>Bullet</module>
-        <module>Enemy</module>
         <module>SpringPlayer</module>
+        <module>SpringEnemy</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>        
