@@ -122,23 +122,29 @@ public class Game
     }
 
     private Collection<? extends IGamePluginService> getPluginServices() {
-        Map<String, IGamePluginService> plugins = context.getBeansOfType(IGamePluginService.class);
-        pluginProcessors.addAll(plugins.values());
-        pluginProcessors.addAll(SPILocator.locateAll(IGamePluginService.class));
+        if (pluginProcessors.size() == 0) {
+            Map<String, IGamePluginService> plugins = context.getBeansOfType(IGamePluginService.class);
+            pluginProcessors.addAll(plugins.values());
+            pluginProcessors.addAll(SPILocator.locateAll(IGamePluginService.class));
+        }
         return pluginProcessors;
     }
 
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
-        Map<String, IEntityProcessingService> entities = context.getBeansOfType(IEntityProcessingService.class);
-        entityProcessors.addAll(entities.values());
-        entityProcessors.addAll(SPILocator.locateAll(IEntityProcessingService.class));
+        if (entityProcessors.size() == 0) {
+            Map<String, IEntityProcessingService> entities = context.getBeansOfType(IEntityProcessingService.class);
+            entityProcessors.addAll(entities.values());
+            entityProcessors.addAll(SPILocator.locateAll(IEntityProcessingService.class));
+        }
         return entityProcessors;
     }
     
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        Map<String, IPostEntityProcessingService> postEntity = context.getBeansOfType(IPostEntityProcessingService.class);
-        postEntityProcessors.addAll(postEntity.values());
-        postEntityProcessors.addAll(SPILocator.locateAll(IPostEntityProcessingService.class));
+        if (postEntityProcessors.size() == 0) {
+            Map<String, IPostEntityProcessingService> postEntity = context.getBeansOfType(IPostEntityProcessingService.class);
+            postEntityProcessors.addAll(postEntity.values());
+            postEntityProcessors.addAll(SPILocator.locateAll(IPostEntityProcessingService.class));
+        }
         return postEntityProcessors;
     }
 
