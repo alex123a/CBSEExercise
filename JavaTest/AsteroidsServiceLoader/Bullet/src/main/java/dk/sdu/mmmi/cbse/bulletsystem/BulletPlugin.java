@@ -9,6 +9,9 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IBulletService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BulletPlugin implements IGamePluginService, IBulletService {
@@ -64,4 +67,15 @@ public class BulletPlugin implements IGamePluginService, IBulletService {
         bullet = createBullet(gameData);
         world.addEntity(bullet);
     }
+
+    @Override
+    public List<Entity> getBullets(GameData gameData, World world) {
+        List<Entity> bullets = new ArrayList();
+        for (Entity bullet: world.getEntities(Bullet.class)) {
+            bullets.add(bullet);
+        }
+        return bullets;
+    }
+
+
 }

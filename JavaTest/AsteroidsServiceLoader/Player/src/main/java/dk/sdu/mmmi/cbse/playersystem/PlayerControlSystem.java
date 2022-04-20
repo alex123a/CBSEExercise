@@ -36,7 +36,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 bullet = bulletService;
             }
 
-            if (bullet != null && gameData.getKeys().isPressed(SPACE)) {
+            // if (bullet != null && gameData.getKeys().isPressed(SPACE)) {
+            if (bullet != null && gameData.getKeys().isPressed(6)) {
                 bullet.fire(gameData, world, player.getID());
             }
             
