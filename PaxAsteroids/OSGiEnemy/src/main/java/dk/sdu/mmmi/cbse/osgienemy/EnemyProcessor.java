@@ -90,8 +90,7 @@ public class EnemyProcessor implements IEntityProcessingService {
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
     }
-
-    //TODO: Dependency injection via Declarative Services
+    
     public void setBulletService(BulletSPI bulletService) {
         this.bulletService = bulletService;
     }
