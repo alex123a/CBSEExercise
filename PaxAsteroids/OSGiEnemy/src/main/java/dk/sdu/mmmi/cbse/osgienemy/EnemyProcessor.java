@@ -9,32 +9,61 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.enemy.Enemy;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
+import java.util.Random;
+
 public class EnemyProcessor implements IEntityProcessingService {
 
     private BulletSPI bulletService;
 
 
+    Random random = new Random();
+    int whatToDo = random.nextInt(3);
+    int turns = 0;
+    int turnsBeforeChange = 60;
+    int fireRan = random.nextInt(50);
+
     @Override
     public void process(GameData gameData, World world) {
+        for (Entity enemy: world.getEntities(Enemy.class)) {
+            PositionPart positionPart = enemy.getPart(PositionPart.class);
+            MovingPart movingPart = enemy.getPart(MovingPart.class);
+            if (whatToDo == 0) {
+                movingPart.setLeft(true);
+                movingPart.setRight(false);
+                movingPart.setUp(false);
+                turns++;
+                if (turns % turnsBeforeChange == 0) {
+                    whatToDo = random.nextInt(4);
+                }
+            } else if (whatToDo == 1) {
+                movingPart.setRight(true);
+                movingPart.setLeft(false);
+                movingPart.setUp(false);
+                turns++;
+                if (turns % turnsBeforeChange == 0) {
+                    whatToDo = random.nextInt(4);
+                }
+            } else {
+                turns++;
+                movingPart.setUp(true);
+                movingPart.setLeft(false);
+                movingPart.setRight(false);
+                if (turns % (turnsBeforeChange) == 0) {
+                    whatToDo = random.nextInt(4);
+                }
+            }
 
-        for (Entity entity : world.getEntities(Enemy.class)) {
-
-            PositionPart positionPart = entity.getPart(PositionPart.class);
-            MovingPart movingPart = entity.getPart(MovingPart.class);
-            double random = Math.random();
-            movingPart.setLeft(random < 0.2);
-            movingPart.setRight(random > 0.3 && random < 0.5);
-            movingPart.setUp(random > 0.7 && random < 0.9);
-            
-            if (random > 0.98 && bulletService != null) {
-                Entity bullet = bulletService.createBullet(entity, gameData);
+            if (fireRan == 0 && bulletService != null) {
+                Entity bullet = bulletService.createBullet(enemy, gameData);
                 world.addEntity(bullet);
             }
-            
-            movingPart.process(gameData, entity);
-            positionPart.process(gameData, entity);            
-            updateShape(entity);
 
+            fireRan = random.nextInt(50);
+
+            movingPart.process(gameData, enemy);
+            positionPart.process(gameData, enemy);
+
+            updateShape(enemy);
         }
     }
 
