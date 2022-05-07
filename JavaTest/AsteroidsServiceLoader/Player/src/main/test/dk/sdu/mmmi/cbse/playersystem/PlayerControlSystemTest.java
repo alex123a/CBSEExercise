@@ -56,7 +56,9 @@ public class PlayerControlSystemTest {
 
     @Test
     public void testOfPlayerMovement() {
+        float xBefore = positionPart.getX();
         float yBefore = positionPart.getY();
+
         // Using Delta time to move and I set it to 10 iteration.
         for (int i = 0; i < 10; i++) {
             gameData.getKeys().setKey(UP, true);
@@ -65,8 +67,10 @@ public class PlayerControlSystemTest {
             movingPart.setRight(gameData.getKeys().isDown(RIGHT));
             movingPart.process(gameData, entity);
         }
+
+        float xAfter = positionPart.getX();
         float yAfter = positionPart.getY();
-        System.out.println(yAfter);
+        assertNotEquals(xBefore, xAfter);
         assertNotEquals(yBefore, yAfter);
     }
 }
