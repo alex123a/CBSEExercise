@@ -15,6 +15,7 @@ import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.util.SPILocator;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +34,12 @@ public class Game
     private List<IPostEntityProcessingService> postEntityProcessors = new ArrayList<>();
     private World world = new World();
     private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+    public static IEntityProcessingService enemyCS;
+
+    public void setEnemyCS(IEntityProcessingService enemyCS) {
+        this.enemyCS = enemyCS;
+        System.out.println("This works: " + enemyCS);
+    }
 
     @Override
     public void create() {
@@ -131,6 +138,7 @@ public class Game
     }
 
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
+        System.out.println("This works: " + enemyCS);
         if (entityProcessors.size() == 0) {
             Map<String, IEntityProcessingService> entities = context.getBeansOfType(IEntityProcessingService.class);
             entityProcessors.addAll(entities.values());
