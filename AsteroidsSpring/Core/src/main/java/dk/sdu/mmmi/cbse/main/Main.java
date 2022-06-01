@@ -9,7 +9,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
 	
 	public static void main(String[] args) {
-		
 		LwjglApplicationConfiguration cfg =
 			new LwjglApplicationConfiguration();
 		cfg.title = "Asteroids";
@@ -17,19 +16,13 @@ public class Main {
 		cfg.height = 400;
 		cfg.useGL30 = false;
 		cfg.resizable = false;
-		/*
+
 		AnnotationConfigApplicationContext annotationContext = new AnnotationConfigApplicationContext();
 		annotationContext.register(Game.class);
 		annotationContext.refresh();
 
-		 */
-
-		ApplicationContext context = new ClassPathXmlApplicationContext("gameHandler.xml");
-
-
-		Game game = (Game) context.getBean("game");
+		Game game = (Game) annotationContext.getBean("game");
 		new LwjglApplication(game, cfg);
-		
 	}
 	
 }

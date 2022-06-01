@@ -14,9 +14,7 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.util.SPILocator;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
-import dk.sdu.mmmi.cbse.springenemysystem.EnemyControlSystem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +22,9 @@ import org.springframework.context.annotation.Configuration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
-//@Configuration("game")
-//@ComponentScan("dk.sdu.mmmi.cbse")
+@Configuration("game")
+@ComponentScan("dk.sdu.mmmi.cbse")
 public class Game implements ApplicationListener {
 
     private static OrthographicCamera cam;
@@ -50,12 +47,6 @@ public class Game implements ApplicationListener {
     public void setEntityProcessors(List<IEntityProcessingService> entities) {
         entityProcessors.addAll(entities);
         entityProcessors.addAll(SPILocator.locateAll(IEntityProcessingService.class));
-    }
-
-    @Autowired
-    public void setPostEntityProcessors(List<IPostEntityProcessingService> postEntity) {
-        postEntityProcessors.addAll(postEntity);
-        postEntityProcessors.addAll(SPILocator.locateAll(IPostEntityProcessingService.class));
     }
 
     @Override
@@ -154,13 +145,13 @@ public class Game implements ApplicationListener {
     }
     
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
+        if (postEntityProcessors.size() == 0) {
+            postEntityProcessors.addAll(SPILocator.locateAll(IPostEntityProcessingService.class));
+        }
         return postEntityProcessors;
     }
 
     private Collection<? extends IBulletService> getBulletServices() {
         return SPILocator.locateAll(IBulletService.class);
-    }
-
-    public void setEnemyCS(EnemyControlSystem enemyCS) {
     }
 }
