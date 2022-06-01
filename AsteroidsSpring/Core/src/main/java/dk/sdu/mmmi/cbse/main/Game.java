@@ -14,16 +14,21 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.util.SPILocator;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import dk.sdu.mmmi.cbse.springenemysystem.EnemyControlSystem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class Game
-        implements ApplicationListener {
+//@Configuration("game")
+//@ComponentScan("dk.sdu.mmmi.cbse")
+public class Game implements ApplicationListener {
 
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
@@ -34,11 +39,23 @@ public class Game
     private List<IPostEntityProcessingService> postEntityProcessors = new ArrayList<>();
     private World world = new World();
     private AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-    public static IEntityProcessingService enemyCS;
 
-    public void setEnemyCS(IEntityProcessingService enemyCS) {
-        this.enemyCS = enemyCS;
-        System.out.println("This works: " + enemyCS);
+    @Autowired
+    public void setPluginProcessors(List<IGamePluginService> plugins) {
+        pluginProcessors.addAll(plugins);
+        pluginProcessors.addAll(SPILocator.locateAll(IGamePluginService.class));
+    }
+
+    @Autowired
+    public void setEntityProcessors(List<IEntityProcessingService> entities) {
+        entityProcessors.addAll(entities);
+        entityProcessors.addAll(SPILocator.locateAll(IEntityProcessingService.class));
+    }
+
+    @Autowired
+    public void setPostEntityProcessors(List<IPostEntityProcessingService> postEntity) {
+        postEntityProcessors.addAll(postEntity);
+        postEntityProcessors.addAll(SPILocator.locateAll(IPostEntityProcessingService.class));
     }
 
     @Override
@@ -129,34 +146,21 @@ public class Game
     }
 
     private Collection<? extends IGamePluginService> getPluginServices() {
-        if (pluginProcessors.size() == 0) {
-            Map<String, IGamePluginService> plugins = context.getBeansOfType(IGamePluginService.class);
-            pluginProcessors.addAll(plugins.values());
-            pluginProcessors.addAll(SPILocator.locateAll(IGamePluginService.class));
-        }
         return pluginProcessors;
     }
 
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
-        System.out.println("This works: " + enemyCS);
-        if (entityProcessors.size() == 0) {
-            Map<String, IEntityProcessingService> entities = context.getBeansOfType(IEntityProcessingService.class);
-            entityProcessors.addAll(entities.values());
-            entityProcessors.addAll(SPILocator.locateAll(IEntityProcessingService.class));
-        }
         return entityProcessors;
     }
     
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        if (postEntityProcessors.size() == 0) {
-            Map<String, IPostEntityProcessingService> postEntity = context.getBeansOfType(IPostEntityProcessingService.class);
-            postEntityProcessors.addAll(postEntity.values());
-            postEntityProcessors.addAll(SPILocator.locateAll(IPostEntityProcessingService.class));
-        }
         return postEntityProcessors;
     }
 
     private Collection<? extends IBulletService> getBulletServices() {
         return SPILocator.locateAll(IBulletService.class);
+    }
+
+    public void setEnemyCS(EnemyControlSystem enemyCS) {
     }
 }

@@ -5,7 +5,7 @@
                 http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd">
     <import resource="handlerInEnemy.xml" />
-    <bean id="client1" class="dk.sdu.mmmi.cbse.main.Game">
+    <bean id="game" class="dk.sdu.mmmi.cbse.main.Game">
         <property name="enemyCS"><ref bean="enemyControl"/> </property>
     </bean>
 </beans>

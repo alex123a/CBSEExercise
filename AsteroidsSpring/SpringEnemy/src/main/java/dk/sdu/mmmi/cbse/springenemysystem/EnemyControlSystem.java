@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-// @Component("enemyCS")
+@Component
 public class EnemyControlSystem implements IEntityProcessingService {
     Random random = new Random();
     int whatToDo = random.nextInt(3);
